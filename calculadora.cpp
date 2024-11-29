@@ -18,4 +18,7 @@ int main()
     cout << "Resta --> " << totalresta << "\n";
 
     return 0; 
+	
+	//ANDREA >> MULTIPLICACION, DIVISION
+	//EFRAIN >> POTENCIACION - RAIZ
 }
