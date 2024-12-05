@@ -1,12 +1,13 @@
 #include <iostream>
-#include <cmath> // Necesario para pow() y sqrt()
+#include <cmath> // Para pow() y operaciones matemáticas
 using namespace std;
 
 int main()
 {
-    int num1, num2, totalsuma, totalresta;
-    long long potencia; // Usamos long long para manejar números grandes en la potenciación
-    double raiz_num1 = -1, raiz_num2 = -1; // Valores por defecto para raíces inválidas
+    int num1, num2, indiceRaiz;
+    int totalsuma, totalresta;
+    long long potencia; // Para manejar grandes números en potenciación
+    double raizPersonalizada = -1; // Valor inicial para raíces no válidas
 
     // Entrada de números
     cout << "Ingrese el primer numero (entero) --> ";
@@ -14,29 +15,35 @@ int main()
     cout << "Ingrese el segundo numero (entero) --> ";
     cin >> num2;
 
+    // Entrada del índice de la raíz
+    cout << "Ingrese el indice de la raiz (entero positivo mayor que 1) --> ";
+    cin >> indiceRaiz;
+
+    // Validación del índice de la raíz
+    if (indiceRaiz <= 1) {
+        cout << "Advertencia: El índice de la raíz debe ser mayor que 1.\n";
+        raizPersonalizada = -1; // Indicador de error
+    } else if (num1 >= 0) {
+        raizPersonalizada = pow(num1, 1.0 / indiceRaiz); // Raíz personalizada de num1
+    } else if (indiceRaiz % 2 == 1) {
+        // Si el índice es impar, se permite calcular la raíz de un número negativo
+        raizPersonalizada = pow(abs(num1), 1.0 / indiceRaiz) * -1;
+    } else {
+        // Si el índice es par, no se puede calcular la raíz de un número negativo
+        cout << "Advertencia: No se puede calcular una raíz par de un número negativo.\n";
+        raizPersonalizada = -1;
+    }
+
     // Operaciones básicas
     totalsuma = num1 + num2;
     totalresta = num1 - num2;
 
-    // Potenciación (si num2 >= 0)
+    // Potenciación (solo con exponentes no negativos)
     if (num2 >= 0) {
         potencia = pow(num1, num2);
     } else {
         cout << "Advertencia: La potenciación solo se realiza con exponentes enteros no negativos.\n";
-        potencia = -1; // Valor inválido para indicar un error
-    }
-
-    // Raíz cuadrada (solo números no negativos)
-    if (num1 >= 0) {
-        raiz_num1 = sqrt(num1);
-    } else {
-        cout << "Advertencia: No se puede calcular la raíz cuadrada de un número negativo (" << num1 << ").\n";
-    }
-
-    if (num2 >= 0) {
-        raiz_num2 = sqrt(num2);
-    } else {
-        cout << "Advertencia: No se puede calcular la raíz cuadrada de un número negativo (" << num2 << ").\n";
+        potencia = -1; // Indicador de error
     }
 
     // Resultados
@@ -48,12 +55,8 @@ int main()
         cout << "Potenciacion (" << num1 << "^" << num2 << ") --> " << potencia << "\n";
     }
 
-    if (raiz_num1 != -1) {
-        cout << "Raiz cuadrada de " << num1 << " --> " << raiz_num1 << "\n";
-    }
-
-    if (raiz_num2 != -1) {
-        cout << "Raiz cuadrada de " << num2 << " --> " << raiz_num2 << "\n";
+    if (raizPersonalizada != -1) {
+        cout << "Raiz de indice " << indiceRaiz << " de " << num1 << " --> " << raizPersonalizada << "\n";
     }
 
     return 0;
